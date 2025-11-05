@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import React, { ReactNode } from "react";
 
-export const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <main className="min-h-screen text-gray-400">
       <Header />
@@ -9,3 +9,5 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     </main>
   );
 };
+
+export default Layout;
