@@ -204,11 +204,11 @@
   }
 
   .form-input {
-    @apply h-12 px-3 py-3 text-white text-base placeholder:text-gray-500 border-gray-600 bg-gray-800 rounded-lg border-yellow-500 focus:ring-0;
+    @apply h-12 px-3 py-3 text-white text-base placeholder:text-gray-500 border-gray-600 bg-gray-800 rounded-lg focus:border-yellow-500 focus:ring-0;
   }
 
   .select-trigger {
-    @apply w-full h-12 px-3 py-3 text-base border-gray-600 bg-gray-800 text-white rounded-lg border-yellow-500 focus:ring-0;
+    @apply w-full h-12 px-3 py-3 text-base border-gray-600 bg-gray-800 text-white rounded-lg focus:border-yellow-500 focus:ring-0;
   }
 
   .country-select-trigger {
