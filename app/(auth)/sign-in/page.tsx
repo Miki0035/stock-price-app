@@ -9,7 +9,6 @@ const SignIn = () => {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormData>({
     defaultValues: {
@@ -34,12 +33,12 @@ const SignIn = () => {
         <InputField
           name="email"
           label="Email"
-          placeholder="Enter your email"
+          type="email"
+          placeholder="contact@gmail.com"
           register={register}
           error={errors.email}
           validation={{
             required: "Email is required",
-            minLength: 2,
             pattern: /^\w+@\w+\.\w+$/,
             message: "Email address is required",
           }}
@@ -48,7 +47,7 @@ const SignIn = () => {
           name="password"
           label="Password"
           type="password"
-          placeholder="Enter a strong password"
+          placeholder="Enter your password"
           register={register}
           error={errors.password}
           validation={{ required: "Password is required", minLength: 8 }}
