@@ -2,7 +2,7 @@
 import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
-import { signInWithEmail } from "@/lib/actions/auth-action";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
