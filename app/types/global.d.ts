@@ -223,12 +223,22 @@ declare global {
     }
 
     type WatchlistStock = {
+        logo: string;
         symbol: string;
         companyName: string;
         currentPrice?: number;
         percentChange?: number;
         marketCap?: number;
         peRatio?: number;
+    }
+
+    type AlertCard = {
+        symbol: string;
+        companyName: string;
+        currentPrice?: number;
+        percentChange?: number;
+        logo: string;
+        className: string;
     }
 
 }

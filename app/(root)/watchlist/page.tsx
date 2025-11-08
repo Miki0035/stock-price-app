@@ -1,7 +1,6 @@
 import Alert from "@/components/Alert";
-import TradingViewWidget from "@/components/TradingViewWidget";
 import WatchListTable from "@/components/WatchListTable";
-import { fetchJSON, getNews, getStocks } from "@/lib/actions/finnhub.actions";
+import { getStocks } from "@/lib/actions/finnhub.actions";
 import React from "react";
 
 const Watchlist = async () => {
@@ -17,7 +16,7 @@ const Watchlist = async () => {
         </div>
         {/* Alert Section */}
         <div>
-          <Alert />
+          <Alert stocks={stocks.slice(0, 5)} />
         </div>
         <div></div>
         {/* News section */}

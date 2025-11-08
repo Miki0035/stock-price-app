@@ -200,6 +200,7 @@ export const getStocks = cache(async (): Promise<WatchlistStock[]> => {
         ]);
         return {
           symbol: s,
+          logo: profile?.logo,
           companyName: profile?.name,
           currentPrice: qouteRes.c,
           percentChange: qouteRes.d,
