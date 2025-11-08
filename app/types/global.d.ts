@@ -221,6 +221,16 @@ declare global {
         name: string
         email: string
     }
+
+    type WatchlistStock = {
+        symbol: string;
+        companyName: string;
+        currentPrice?: number;
+        percentChange?: number;
+        marketCap?: number;
+        peRatio?: number;
+    }
+
 }
 
 export { };
