@@ -8,7 +8,7 @@ const AlertCard = ({
   symbol,
   percentChange,
   className,
-}: AlertCard) => {
+}: AlertCardProps) => {
   return (
     <div className="w-full p-3 border-1 rounded-md shadow-2xl bg-[#121214] border-gray-600">
       {/* top side */}

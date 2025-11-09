@@ -232,13 +232,22 @@ declare global {
         peRatio?: number;
     }
 
-    type AlertCard = {
+    type AlertCardProps = {
         symbol: string;
         companyName: string;
         currentPrice?: number;
         percentChange?: number;
         logo: string;
         className: string;
+    }
+
+    type NewsCardProps = {
+        symbol: string;
+        headline: string;
+        publisher: string;
+        timePublished: number;
+        article: string;
+        href: string;
     }
 
 }

@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { formatDistanceToNow } from 'date-fns';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -141,3 +142,8 @@ export const getFormattedTodayDate = () => new Date().toLocaleDateString('en-US'
   day: 'numeric',
   timeZone: 'UTC',
 });
+
+// convert UNIX timestamp (number) to string date
+export function timeAgo(unixTimestamp: number): string {
+  return formatDistanceToNow(new Date(unixTimestamp * 1000), { addSuffix: true });
+}
