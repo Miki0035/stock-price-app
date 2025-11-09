@@ -4,6 +4,7 @@
 import { getDateRange, validateArticle, formatArticle } from '@/lib/utils';
 import { POPULAR_STOCK_SYMBOLS } from '@/lib/constants';
 import { cache } from 'react';
+import { symbol } from 'better-auth';
 
 const FINNHUB_BASE_URL = 'https://finnhub.io/api/v1';
 const NEXT_PUBLIC_FINNHUB_API_KEY = process.env.NEXT_PUBLIC_FINNHUB_API_KEY ?? '';
@@ -179,3 +180,39 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
     return [];
   }
 });
+
+
+export const getStocks = cache(async (): Promise<WatchlistStock[]> => {
+  try {
+    const token = process.env.FINNHUB_API_KEY ?? NEXT_PUBLIC_FINNHUB_API_KEY;
+    // Fetch the first 10 stocks
+    const limitedStock = POPULAR_STOCK_SYMBOLS.slice(0, 10)
+
+    const results = await Promise.all(
+      limitedStock.map(async (s) => {
+        // profile : show name
+        // metricRes : show marketCap, peRatio
+        // quote: show  current price , price change
+        const [profile, metricRes, qouteRes] = await Promise.all([
+          fetchJSON<any>(`${FINNHUB_BASE_URL}/stock/profile2?symbol=${s}&token=${token}`, 300),
+          fetchJSON<any>(`${FINNHUB_BASE_URL}/stock/metric?symbol=${s}&token=${token}`, 300),
+          fetchJSON<any>(`${FINNHUB_BASE_URL}/quote?symbol=${s}&token=${token}`, 300),
+        ]);
+        return {
+          symbol: s,
+          logo: profile?.logo,
+          companyName: profile?.name,
+          currentPrice: qouteRes.c,
+          percentChange: qouteRes.d,
+          marketCap: metricRes?.metric?.marketCapitalization,
+          peRatio: metricRes?.metric?.peNormalizedAnnual
+        }
+      })
+    )
+    return results;
+
+  } catch (error) {
+    console.error('Error fetching stocks action', error)
+    return [];
+  }
+})

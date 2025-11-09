@@ -221,6 +221,35 @@ declare global {
         name: string
         email: string
     }
+
+    type WatchlistStock = {
+        logo: string;
+        symbol: string;
+        companyName: string;
+        currentPrice?: number;
+        percentChange?: number;
+        marketCap?: number;
+        peRatio?: number;
+    }
+
+    type AlertCardProps = {
+        symbol: string;
+        companyName: string;
+        currentPrice?: number;
+        percentChange?: number;
+        logo: string;
+        className: string;
+    }
+
+    type NewsCardProps = {
+        symbol: string;
+        headline: string;
+        publisher: string;
+        timePublished: number;
+        article: string;
+        href: string;
+    }
+
 }
 
 export { };
