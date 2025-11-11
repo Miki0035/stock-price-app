@@ -1,7 +1,7 @@
-import { Schema } from "mongoose";
+import mongoose, { ObjectId, Schema } from "mongoose";
 
-export interface Alert extends Document {
-    userId: string;
+interface Alert extends Document {
+    user: ObjectId;
     alertName: string;
     symbol: string;
     alertType: string
@@ -11,6 +11,10 @@ export interface Alert extends Document {
 }
 
 const AlertSchema = new Schema<Alert>({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User', required: true, index: true
+    },
     alertName: { type: String, required: true, trim: true },
     symbol: { type: String, required: true, uppercase: true, trim: true },
     alertType: { type: String, required: true, trim: true },
@@ -20,3 +24,7 @@ const AlertSchema = new Schema<Alert>({
 }, {
     timestamps: false,
 })
+
+// won't recompile model when server hot reloads
+export const AlertModel =
+    mongoose.models.Alert || mongoose.model("Alert", AlertSchema);

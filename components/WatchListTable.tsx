@@ -34,7 +34,7 @@ const WatchListTable = ({ stocks }: { stocks: WatchlistStock[] }) => {
             <TableHead className="text-right text-gray-400">
               P/E Ratio
             </TableHead>
-            <TableHead className="text-center text-gray-400">Alert</TableHead>
+            {/* <TableHead className="text-center text-gray-400">Alert</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody className="text-lg">
@@ -69,11 +69,11 @@ const WatchListTable = ({ stocks }: { stocks: WatchlistStock[] }) => {
                 <TableCell className="text-white text-center">
                   {peRatio?.toFixed(1)}
                 </TableCell>
-                <TableCell className="text-center">
+                {/* <TableCell className="text-center">
                   <Button className="cursor-pointer text-white bg-[#FF824333] hover:bg-[#FF824333]/100 text-red-400">
                     Add Alert
                   </Button>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             )
           )}

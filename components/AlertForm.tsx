@@ -3,9 +3,15 @@ import React, { useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputField from "./forms/InputField";
 import SelectField from "./forms/SelectField";
-import { ALERT_TYPE_OPTIONS, CONDITION_OPTIONS } from "@/lib/constants";
+import {
+  ALERT_TYPE_OPTIONS,
+  CONDITION_OPTIONS,
+  NOTIFICATION_FREQUENCY_OPTIONS,
+} from "@/lib/constants";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { createAlert } from "@/lib/actions/alert.actions";
+import { toast } from "sonner";
 
 const AlertForm = ({
   isOpen,
@@ -60,7 +66,22 @@ const AlertForm = ({
   const onSubmit: SubmitHandler<AlertFormData> = async (
     data: AlertFormData
   ) => {
-    console.log("Form Data:", data);
+    try {
+      const result = await createAlert(data);
+      if (result?.success) {
+        toast("Alert has been created", {
+          description:
+            "You will start receiving notifications based on your alert settings.",
+        });
+      }
+      onClose();
+    } catch (error) {
+      console.error("Error alert form", error);
+      toast.error("Something went wrong, please try again", {
+        description:
+          error instanceof Error ? error.message : "Failed to create alert",
+      });
+    }
   };
 
   return (
@@ -123,11 +144,15 @@ const AlertForm = ({
             label="Frequency"
             placeholder=""
             control={control}
-            options={CONDITION_OPTIONS}
+            options={NOTIFICATION_FREQUENCY_OPTIONS}
           />
 
-          <Button type="submit" className="yellow-btn w-full text-sm">
-            Create Alert
+          <Button
+            disabled={isSubmitting}
+            type="submit"
+            className="yellow-btn w-full text-sm"
+          >
+            {isSubmitting ? "Creating Alert..." : "Create Alert"}
           </Button>
         </form>
       </div>
