@@ -1,8 +1,9 @@
+import { connectToDatabase } from "@/database/mongoose";
 import { getNews } from "../actions/finnhub.actions";
-import { getAllUsersForNewsEmail } from "../actions/user.actions";
+import { getAllUsersForNewsEmail, getAllUsersSessionExpired7Days } from "../actions/user.actions";
 import { getWatchlistSymbolsByEmail } from "../actions/watchlist.actions";
-import { sendNewsSummaryEmail, sendWelcomeEmail } from "../nodemailer";
-import { formatDateToday, getFormattedTodayDate } from "../utils";
+import { sendNewsSummaryEmail, sendReminderEmail, sendWelcomeEmail } from "../nodemailer";
+import { getFormattedTodayDate } from "../utils";
 import { inngest } from "./client";
 import { NEWS_SUMMARY_EMAIL_PROMPT, PERSONALIZED_WELCOME_EMAIL_PROMPT } from "./prompts";
 
@@ -140,3 +141,36 @@ export const sendDailyNewsSummary = inngest.createFunction({
         return { success: true, message: `Daily news summary emails sent successfully` }
     }
 )
+
+export const reminderEmail = inngest.createFunction(
+    {
+        id: 'reminder-email'
+    }, [
+    {
+        event: 'app/user.reminder.email'
+    },
+    {
+        cron: '* * * * *'
+    }
+],
+    async ({ step }) => {
+        // get the users whose sessions expired 7 days ago
+        const users = await step.run('get-expired-user-sessions', getAllUsersSessionExpired7Days);
+
+        // Send reminder emails to users with expired sessions
+        await step.run('send-reminder-emails', async () => {
+            if (!users || users.length === 0) return { success: true, message: 'No users to send email' };;
+
+            await Promise.all(
+                users.map(async (user) => {
+                    sendReminderEmail({ email: user.email, name: user.name });
+                })
+            )
+
+            return {
+                success: true,
+                message: `Reminder emails sent to ${users.length} users successfully`
+            }
+        })
+
+    })

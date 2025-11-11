@@ -29,3 +29,37 @@ export const getAllUsersForNewsEmail = async () => {
     }
 
 }
+
+
+export const getAllUsersSessionExpired7Days = async () => {
+    try {
+        const mongoose = await connectToDatabase();
+        const db = mongoose.connection.db;
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+        const sessions = await db?.collection("sessions").find({
+            expiresAt: { $lt: sevenDaysAgo }
+        }).toArray();
+
+        if (sessions?.length === 0 || sessions === undefined) return [];
+
+        const users: User[] = [];
+
+        for (const session of sessions) {
+            const user = await db?.collection("user").findOne({ _id: session.userId });
+            if (user) {
+                users.push({
+                    id: user?.id,
+                    email: user?.email,
+                    name: user?.name
+                });
+            }
+
+        }
+        return users;
+
+    } catch (error) {
+        console.error('Error fetching user sessions action', error)
+    }
+}

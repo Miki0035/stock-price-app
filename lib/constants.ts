@@ -337,3 +337,10 @@ export const WATCHLIST_TABLE_HEADER = [
     'Alert',
     'Action',
 ];
+
+export const NOTIFICATION_FREQUENCY_OPTIONS = [
+    { label: 'Immediately', value: 'instant' },
+    { label: 'Once per day', value: 'daily' },
+    { label: 'Once per week', value: 'weekly' },
+    { label: 'Once per month', value: 'monthly' },
+]
