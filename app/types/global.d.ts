@@ -1,3 +1,5 @@
+import { symbol } from "better-auth";
+
 declare global {
     type SignInFormData = {
         email: string;
@@ -248,6 +250,16 @@ declare global {
         timePublished: number;
         article: string;
         href: string;
+    }
+
+    type AlertFormData = {
+
+        alertName: string;
+        symbol: string;
+        alertType: string
+        condition: string
+        threshold: string;
+        frequency: string;
     }
 
 }
