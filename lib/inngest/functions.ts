@@ -150,8 +150,11 @@ export const reminderEmail = inngest.createFunction(
         event: 'app/user.reminder.email'
     },
     {
-        cron: '* * * * *'
-    }
+        cron: '0 12 * * *'
+    },
+    // {
+    //     cron: '* * * * *'
+    // }
 ],
     async ({ step }) => {
         // get the users whose sessions expired 7 days ago

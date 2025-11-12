@@ -38,9 +38,12 @@ export const getAllUsersSessionExpired7Days = async () => {
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-        const sessions = await db?.collection("sessions").find({
+
+        // change to $gt for testing purposes
+        const sessions = await db?.collection("session").find({
             expiresAt: { $lt: sevenDaysAgo }
         }).toArray();
+
 
         if (sessions?.length === 0 || sessions === undefined) return [];
 

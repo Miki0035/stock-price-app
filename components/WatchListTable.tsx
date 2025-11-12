@@ -16,9 +16,9 @@ const WatchListTable = ({ stocks }: { stocks: WatchlistStock[] }) => {
     <div>
       <div className="flex justify-between items-center my-2">
         <h3 className="font-bold text-3xl text-gray-100">Watchlist</h3>
-        <Button type="button" className="yellow-btn w-32 h-5 p-0 text-sm">
+        {/* <Button type="button" className="yellow-btn w-32 h-5 p-0 text-sm">
           Add Stock
-        </Button>
+        </Button> */}
       </div>
       <Table className="text-md">
         <TableHeader>
