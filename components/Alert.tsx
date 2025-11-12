@@ -41,17 +41,21 @@ const Alert = ({ stocks }: { stocks: WatchlistStock[] }) => {
           )}
         </div>
       </div>
-      {open && (
-        <>
-          <div
-            className={cn(
-              "absolute bg-black/30 backdrop-blur-sm top-0 left-0 w-full min-h-screen z-10 transtion-all ease-in-out duration-500",
-              open ? "opacity-100" : "opacity-0"
-            )}
-          />
-          <AlertForm isOpen={open} onClose={() => setOpen(false)} />
-        </>
-      )}
+
+      {/* Modal section */}
+      <div
+        className={cn(
+          "transtion-all ease-in-out",
+          open ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+      >
+        <div
+          className={cn(
+            "fixed bg-black/30 backdrop-blur-sm top-0 left-0 w-full min-h-screen z-10"
+          )}
+        />
+        <AlertForm isOpen={open} onClose={() => setOpen(false)} />
+      </div>
     </>
   );
 };

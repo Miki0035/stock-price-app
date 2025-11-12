@@ -46,13 +46,13 @@ const AlertCard = ({
         </div>
         {/* bottom left side */}
         <div className="space-y-2">
-          <div className="flex justify-end gap-3">
+          {/* <div className="flex justify-end gap-3">
             <PencilIcon
               size={16}
               className="stroke-white fill-black cursor-pointer"
             />
             <Trash2 size={16} className="stroke-white cursor-pointer" />
-          </div>
+          </div> */}
           <p className="text-xs text-yellow-300 rounded-sm bg-yellow-500/50 px-2 py-1">
             Once per day
           </p>
