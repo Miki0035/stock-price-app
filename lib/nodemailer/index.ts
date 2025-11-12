@@ -38,7 +38,7 @@ export const sendNewsSummaryEmail = async ({ email, date, newsContent }: { email
 }
 
 export const sendReminderEmail = async ({ email, name }: { email: string, name: string }): Promise<void> => {
-    const htmlTemplate = INACTIVE_USER_REMINDER_EMAIL_TEMPLATE.replace('{{name}', name);
+    const htmlTemplate = INACTIVE_USER_REMINDER_EMAIL_TEMPLATE.replace('{{name }}', name);
     const mailOptions = {
         from: '"Signalist <signalist@mk.pro>"'
         , to: email,

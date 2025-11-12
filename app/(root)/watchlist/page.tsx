@@ -10,6 +10,7 @@ const Watchlist = async () => {
 
   const stocks = await getStocks();
   const news = await getNews(POPULAR_STOCK_SYMBOLS);
+
   return (
     <div className="flex min-h-screen home-wrapper ">
       <section className="grid w-full gap-8 home-section">

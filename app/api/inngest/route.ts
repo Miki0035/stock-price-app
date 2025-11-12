@@ -1,5 +1,5 @@
 import { inngest } from "@/lib/inngest/client";
-import { sendDailyNewsSummary, sendSignUpEmail } from "@/lib/inngest/functions";
+import { reminderEmail, sendDailyNewsSummary, sendSignUpEmail } from "@/lib/inngest/functions";
 import { serve } from "inngest/next"
 
 export const { GET, POST, PUT } = serve({
@@ -7,6 +7,7 @@ export const { GET, POST, PUT } = serve({
     // jobs executed on the background by inngest
     functions: [
         sendSignUpEmail,
-        sendDailyNewsSummary
+        sendDailyNewsSummary,
+        reminderEmail
     ],
 })
