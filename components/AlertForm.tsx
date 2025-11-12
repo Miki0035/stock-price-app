@@ -85,16 +85,16 @@ const AlertForm = ({
   };
 
   return (
-    <div className="absolute top-0 left-0 w-full z-50 flex justify-center items-center h-screen">
+    <div className="absolute top-10 left-0 w-full z-50 flex justify-center items-center h-screen">
       <div
         ref={modalRef}
         className={cn(
-          "p-6 rounded-md bg-black/90 shadow-2xl shadow-black/50 w-full transition-all duration-800 rounded-md max-w-md bg-[#121214]",
+          "p-6 rounded-md bg-black/90 shadow-2xl shadow-black/50 w-full transition-all rounded-md max-w-md bg-[#121214]",
           isOpen ? "opacity-100" : "opacity-0"
         )}
       >
         <h1 className="text-2xl font-bold text-white mb-2">Price Alert</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 px-2 py-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 px-2 py-5">
           <InputField
             name="alertName"
             label="Alert Name"
