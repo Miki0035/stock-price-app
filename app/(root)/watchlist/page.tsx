@@ -5,8 +5,6 @@ import { getNews, getStocks } from "@/lib/actions/finnhub.actions";
 import { POPULAR_STOCK_SYMBOLS } from "@/lib/constants";
 
 const Watchlist = async () => {
-  const scriptUrl = `https://s3.tradingview.com/external-embedding/embed-widget-`;
-
   const stocks = await getStocks();
   const news = await getNews(POPULAR_STOCK_SYMBOLS);
 
