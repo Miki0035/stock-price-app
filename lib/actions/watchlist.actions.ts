@@ -1,25 +1,31 @@
 'use server';
-
-import { connectToDatabase } from '@/database/mongoose';
-import { Watchlist } from '@/database/models/watchlist.model';
+import { prisma } from "../prisma";
 
 export async function getWatchlistSymbolsByEmail(email: string): Promise<string[]> {
     if (!email) return [];
 
     try {
-        const mongoose = await connectToDatabase();
-        const db = mongoose.connection.db;
-        if (!db) throw new Error('MongoDB connection not found');
 
         // Better Auth stores users in the "user" collection
-        const user = await db.collection('user').findOne<{ _id?: unknown; id?: string; email?: string }>({ email });
+        const user = await prisma.user.findFirstOrThrow({
+            where: {
+                email
+            },
+
+        })
 
         if (!user) return [];
 
-        const userId = (user.id as string) || String(user._id || '');
+        const userId = (user.id as string) || String(user.id || '');
         if (!userId) return [];
 
-        const items = await Watchlist.find({ userId }, { symbol: 1 }).lean();
+        const items = await prisma.watchlist.findMany({
+
+            where: {
+                userId,
+            }
+        })
+
         return items.map((i) => String(i.symbol));
     } catch (err) {
         console.error('getWatchlistSymbolsByEmail error:', err);

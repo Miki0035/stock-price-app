@@ -1,10 +1,8 @@
 'use server';
 // GETS LATEST NEWS ABOUT STOCK
-
 import { getDateRange, validateArticle, formatArticle } from '@/lib/utils';
 import { POPULAR_STOCK_SYMBOLS } from '@/lib/constants';
 import { cache } from 'react';
-import { symbol } from 'better-auth';
 
 const FINNHUB_BASE_URL = 'https://finnhub.io/api/v1';
 const NEXT_PUBLIC_FINNHUB_API_KEY = process.env.NEXT_PUBLIC_FINNHUB_API_KEY ?? '';
@@ -184,7 +182,7 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
 
 export const getStocks = cache(async (): Promise<WatchlistStock[]> => {
   try {
-    const token = process.env.FINNHUB_API_KEY ?? NEXT_PUBLIC_FINNHUB_API_KEY;
+    const token = process.env.FINNHUB_API_KEY!;
     // Fetch the first 10 stocks
     const limitedStock = POPULAR_STOCK_SYMBOLS.slice(0, 10)
 

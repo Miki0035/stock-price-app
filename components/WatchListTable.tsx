@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableBody,
@@ -7,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "./ui/button";
 import { Star } from "lucide-react";
 import { formatMarketCap } from "@/lib/utils";
 
@@ -75,7 +73,7 @@ const WatchListTable = ({ stocks }: { stocks: WatchlistStock[] }) => {
                   </Button>
                 </TableCell> */}
               </TableRow>
-            )
+            ),
           )}
         </TableBody>
       </Table>

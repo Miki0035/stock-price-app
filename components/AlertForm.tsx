@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputField from "./forms/InputField";
 import SelectField from "./forms/SelectField";
@@ -64,7 +64,7 @@ const AlertForm = ({
   });
 
   const onSubmit: SubmitHandler<AlertFormData> = async (
-    data: AlertFormData
+    data: AlertFormData,
   ) => {
     try {
       const result = await createAlert(data);
@@ -90,7 +90,7 @@ const AlertForm = ({
         ref={modalRef}
         className={cn(
           "p-6 rounded-md bg-black/90 shadow-2xl shadow-black/50 w-full transition-all rounded-md max-w-md bg-[#121214]",
-          isOpen ? "opacity-100" : "opacity-0"
+          isOpen ? "opacity-100" : "opacity-0",
         )}
       >
         <h1 className="text-2xl font-bold text-white mb-2">Price Alert</h1>

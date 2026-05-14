@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   const session = await auth.api.getSession({

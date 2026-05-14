@@ -29,7 +29,7 @@ const SignUp = () => {
       email: "",
       password: "",
       country: "US",
-      investmentGoals: "Growth",
+      investmentGoal: "Growth",
       riskTolerance: "Medium",
       preferredIndustry: "Technology",
     },
@@ -37,7 +37,7 @@ const SignUp = () => {
   });
 
   const onSubmit: SubmitHandler<SignUpFormData> = async (
-    data: SignUpFormData
+    data: SignUpFormData,
   ) => {
     try {
       // signUpWithEmail
@@ -106,7 +106,7 @@ const SignUp = () => {
           placeholder="Select your investment goal"
           options={INVESTMENT_GOALS}
           control={control}
-          error={errors.investmentGoals}
+          error={errors.investmentGoal}
           required
         />
         {/* Risk Tolerance */}

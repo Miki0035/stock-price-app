@@ -1,24 +1,15 @@
 "use server"
-
-import { connectToDatabase } from "@/database/mongoose"
-
+import { prisma } from "../prisma"
 export const getAllUsersForNewsEmail = async () => {
     try {
         // b/c we are in a server action we need to reconnect to database
         // but b/c it is cached it will not recreate it
-        const mongoose = await connectToDatabase()
-        const db = mongoose.connection.db
-        if (!db) throw new Error('Mongoose connection not connected')
+        // Better Auth stores users in the "user" collection
+        const users = await prisma.user.findMany()
 
-        const users = await db.collection('user').find({
-            email: { $exists: true, $ne: null },
-        },
-            {
-                projection: { _id: 1, id: 1, email: 1, name: 1, country: 1 }
-            }).toArray()
 
         return users.filter((user) => user.email && user.name).map((user) => ({
-            id: user.id || user._id.toString() || '',
+            id: user.id || '',
             email: user.email,
             name: user.name
         }))
@@ -33,21 +24,26 @@ export const getAllUsersForNewsEmail = async () => {
 
 export const getAllUsersSessionExpired7Days = async () => {
     try {
-        const mongoose = await connectToDatabase();
-        const db = mongoose.connection.db;
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-        const sessions = await db?.collection("sessions").find({
-            expiresAt: { $lt: sevenDaysAgo }
-        }).toArray();
+        const sessions = await prisma.session.findMany({
+            where: {
+                expiresAt: { lte: sevenDaysAgo }
+            }
+        })
+
 
         if (sessions?.length === 0 || sessions === undefined) return [];
 
         const users: User[] = [];
 
         for (const session of sessions) {
-            const user = await db?.collection("user").findOne({ _id: session.userId });
+            const user = await prisma.user.findFirstOrThrow({
+                where: {
+                    id: session.id
+                }
+            })
             if (user) {
                 users.push({
                     id: user?.id,
