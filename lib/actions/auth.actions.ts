@@ -3,8 +3,9 @@
 import { headers } from "next/headers"
 import { auth } from "../better-auth/auth"
 import { inngest } from "../inngest/client"
+import { prisma } from "../prisma"
 
-export const signUpWithEmail = async ({ email, fullName, password, investmentGoals, preferredIndustry, country, riskTolerance }: SignUpFormData) => {
+export const signUpWithEmail = async ({ email, fullName, password, investmentGoal, preferredIndustry, country, riskTolerance }: SignUpFormData) => {
     try {
         const response = await auth.api.signUpEmail({
             body: {
@@ -15,6 +16,17 @@ export const signUpWithEmail = async ({ email, fullName, password, investmentGoa
         })
 
         if (response) {
+            const user = response.user;
+            await prisma.user.update({
+                where: {
+                    id: user.id
+                },
+                data: {
+                    investmentGoal,
+                    preferredIndustry,
+                    country, riskTolerance
+                }
+            })
             await inngest.send({
                 // name of the inngest event to trigger function
 
@@ -26,7 +38,7 @@ export const signUpWithEmail = async ({ email, fullName, password, investmentGoa
                     country,
                     riskTolerance,
                     preferredIndustry,
-                    investmentGoals
+                    investmentGoal
                 }
             })
         }

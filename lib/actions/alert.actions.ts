@@ -1,8 +1,7 @@
 'use server'
-
 import { headers } from "next/headers";
 import { auth } from "../better-auth/auth";
-import { AlertModel } from "@/database/models/alert.model";
+import { prisma } from "../prisma";
 
 export const createAlert = async (alertData: AlertFormData) => {
     try {
@@ -18,10 +17,22 @@ export const createAlert = async (alertData: AlertFormData) => {
         }
         const userId = session.user.id;
 
-        const result = await AlertModel.create({
-            alertName, symbol, alertType, condition, threshold, frequency, user: userId
+        const result = await prisma.alert.create({
+            data: {
+                alertName,
+                symbol,
+                alertType,
+                condition,
+                threshold,
+                frequency,
+                userId: userId
+            },
+            // adds the user reference when returing result
+            // include: {
+            //     user: true
+            // }
         })
-        if (!result._id) {
+        if (!result.id) {
             return {
                 success: false,
                 error: 'Failed to create alert'

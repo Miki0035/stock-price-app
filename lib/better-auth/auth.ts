@@ -1,7 +1,7 @@
-import { connectToDatabase } from "@/database/mongoose";
 import { betterAuth } from "better-auth";
-import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { nextCookies } from "better-auth/next-js"
+import { prismaAdapter } from "better-auth/adapters/prisma"
+import { prisma } from "../prisma";
 
 // Singleton instance: only creates once instance for auth 
 let authInstance: ReturnType<typeof betterAuth> | null = null;
@@ -9,13 +9,12 @@ let authInstance: ReturnType<typeof betterAuth> | null = null;
 export const getAuth = async () => {
   if (authInstance) return authInstance;
 
-  const mongoose = await connectToDatabase();
-  const db = mongoose.connection.db;
 
-  if (!db) throw new Error("MongoDB connection not found")
 
   authInstance = betterAuth({
-    database: mongodbAdapter(db),
+    database: prismaAdapter(prisma, {
+      provider: "mongodb"
+    }),
     secret: process.env.BETTER_AUTH_SECRET,
     baseURL: process.env.BETTER_AUTH_URL,
     emailAndPassword: {

@@ -3,7 +3,6 @@ import News from "@/components/News";
 import WatchListTable from "@/components/WatchListTable";
 import { getNews, getStocks } from "@/lib/actions/finnhub.actions";
 import { POPULAR_STOCK_SYMBOLS } from "@/lib/constants";
-import React from "react";
 
 const Watchlist = async () => {
   const scriptUrl = `https://s3.tradingview.com/external-embedding/embed-widget-`;
