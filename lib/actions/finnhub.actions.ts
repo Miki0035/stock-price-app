@@ -5,7 +5,7 @@ import { POPULAR_STOCK_SYMBOLS } from '@/lib/constants';
 import { cache } from 'react';
 
 const FINNHUB_BASE_URL = 'https://finnhub.io/api/v1';
-const NEXT_PUBLIC_FINNHUB_API_KEY = process.env.FINNHUB_API_KEY ?? '';
+const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY ?? '';
 
 async function fetchJSON<T>(url: string, revalidateSeconds?: number): Promise<T> {
   const options: RequestInit & { next?: { revalidate?: number } } = revalidateSeconds
@@ -25,7 +25,7 @@ export { fetchJSON };
 export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> {
   try {
     const range = getDateRange(5);
-    const token = NEXT_PUBLIC_FINNHUB_API_KEY;
+    const token = FINNHUB_API_KEY;
     if (!token) {
       throw new Error('FINNHUB API key is not configured');
     }
@@ -39,18 +39,16 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
     if (cleanSymbols.length > 0) {
       const perSymbolArticles: Record<string, RawNewsArticle[]> = {};
 
-      await Promise.all(
-        cleanSymbols.map(async (sym) => {
-          try {
-            const url = `${FINNHUB_BASE_URL}/company-news?symbol=${encodeURIComponent(sym)}&from=${range.from}&to=${range.to}&token=${token}`;
-            const articles = await fetchJSON<RawNewsArticle[]>(url, 300);
-            perSymbolArticles[sym] = (articles || []).filter(validateArticle);
-          } catch (e) {
-            console.error('Error fetching company news for', sym, e);
-            perSymbolArticles[sym] = [];
-          }
-        })
-      );
+      for (const sym of cleanSymbols) {
+        try {
+          const url = `${FINNHUB_BASE_URL}/company-news?symbol=${encodeURIComponent(sym)}&from=${range.from}&to=${range.to}&token=${token}`;
+          const articles = await fetchJSON<RawNewsArticle[]>(url, 300);
+          perSymbolArticles[sym] = (articles || []).filter(validateArticle);
+        } catch (e) {
+          console.error('Error fetching company news for', sym, e);
+          perSymbolArticles[sym] = [];
+        }
+      }
 
       const collected: MarketNewsArticle[] = [];
       // Round-robin up to 6 picks
@@ -100,7 +98,7 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
 
 export const searchStocks = cache(async (query?: string): Promise<StockWithWatchlistStatus[]> => {
   try {
-    const token = NEXT_PUBLIC_FINNHUB_API_KEY;
+    const token = FINNHUB_API_KEY;
     if (!token) {
       // If no token, log and return empty to avoid throwing per requirements
       console.error('Error in stock search:', new Error('FINNHUB API key is not configured'));
