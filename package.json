@@ -8,7 +8,7 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint . --fix",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && next  build --turbopack"
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.6.11",
