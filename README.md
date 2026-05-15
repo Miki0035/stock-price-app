@@ -9,6 +9,10 @@
 <p align="center">
   <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js"/>
   <img src="https://img.shields.io/badge/Tailwind_CSS-grey?style=for-the-badge&logo=tailwind-css&logoColor=38B2AC" alt="TailwindCSS"/>
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma"/>
+  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB"/>
+  <img src="https://img.shields.io/badge/Inngest-000000?style=for-the-badge&logo=inngest&logoColor=FF5722" alt="Inngest"/>
+  <img src="https://img.shields.io/badge/shadcn/ui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="shadcn/ui"/>
 
 </p>
 
@@ -32,7 +36,7 @@ Adrian and JSMastery team😃 ) highly recommend if you want to upgrade your ski
 - [Next.js](https://nextjs.org/)
 - [Better-Auth](https://www.better-auth.com/)
 - [MongoDB](https://www.mongodb.com/)
-- [Mongoose](https://mongoosejs.com/)
+- [Prisma](https://www.prisma.io/)
 - [TailwindCSS](https://tailwindcss.com/docs/installation/using-vite)
 - [Inngest](https://www.inngest.com/)
 - [Nodemailer](https://nodemailer.com/)
